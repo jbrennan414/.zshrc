@@ -1,3 +1,21 @@
+# ---------- Git branch in prompt ----------
+
+# Enable command substitution in the prompt
+setopt PROMPT_SUBST
+
+# Function to show current git branch in parentheses
+git_branch_prompt() {
+  local branch
+  branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+  if [[ -n "$branch" ]]; then
+    echo " (${branch})"
+  fi
+}
+
+# Prompt: user@host path (branch) $
+# %F{green}...%f wraps text in green
+PROMPT='%n@%m %~%F{green}$(git_branch_prompt)%f $ '
+
 # ---------- Git helpers ----------
 
 # bcu: branch clean up
